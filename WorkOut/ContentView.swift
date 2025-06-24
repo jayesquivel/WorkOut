@@ -13,7 +13,7 @@ struct ContentView: View {
     var body: some View {
         Group {
             if isActive {
-                HomeView()
+                MainAppView()
             } else {
                 LaunchScreenView()
             }
