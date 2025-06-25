@@ -14,7 +14,6 @@ struct MainAppView: View {
                 .tabItem{
                     Label("Home", systemImage: "house.fill")
                 }
-            
             Text("Log")
                 .tabItem{
                     Label("Log", systemImage: "rectangle.and.pencil.and.ellipsis")
@@ -28,7 +27,7 @@ struct MainAppView: View {
                     Label("Hisotry", systemImage: "clock.fill")
                 }
             
-            Text("Settings")
+            SettingsView()
                 .tabItem{
                     Label("Settings", systemImage: "gearshape")
                 }
