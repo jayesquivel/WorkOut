@@ -57,6 +57,9 @@ struct SettingsView: View {
                     NavigationLink("Privacy Settings", destination: Text("Privacy Settings"))
                 }
             }
+            // Title
+            .navigationBarTitle("Settings")
+            .navigationBarTitleDisplayMode(.large)
         }
     } 
 }
