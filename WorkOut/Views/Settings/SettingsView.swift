@@ -15,7 +15,7 @@ struct SettingsView: View {
                 // General Section
                 Section(header: Text("General")) {
                     NavigationLink("Notifications", destination: NotificationSettingsView())
-                    NavigationLink("Apple Health", destination: Text("Apple Health Settings"))
+                    NavigationLink("Apple Health", destination: AppleHealthSettings())
                     NavigationLink("Siri Shortcuts", destination: Text("Siri Shortcuts"))
                     NavigationLink("Advanced", destination: Text("Advanced Settings"))
                 }
