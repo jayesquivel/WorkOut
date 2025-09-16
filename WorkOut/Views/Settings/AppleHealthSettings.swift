@@ -49,10 +49,26 @@ struct AppleHealthSettings: View {
                 }
             }
             
-        
+            // Allow data to be Read section
+            Section(header: Text("ALLOW WORKOUT TO READ")) {
+                Toggle("Measurements", isOn: $readMeasurements)
+                Text("Measurements will be read from Apple Health and displayed in WorkOut. Measurements are stored locally and not uploaded to WorkOut servers.")
+                    .font(.caption)
+                    .foregroundColor(.secondary)
+                
+                if showReadWarning {
+                    BannerView(text: "2 additional measurements available in Apple Health. Add measurements to WorkOut?", buttonTitle: "Add", action: { print("Add tapped")})
+                }
+            }
         }
+        // Header only seen in content view
+        .navigationTitle("Apple Health Settings")
+        .navigationBarTitleDisplayMode(.inline)
     }
-}
+    
+
+    }
+
 struct BannerView: View {
     var text: String
     var buttonTitle: String
@@ -74,6 +90,7 @@ struct BannerView: View {
         .cornerRadius(8)
     }
 }
+
 #Preview {
     AppleHealthSettings()
 }

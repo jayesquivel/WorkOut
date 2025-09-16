@@ -16,15 +16,11 @@ struct SettingsView: View {
                 Section(header: Text("General")) {
                     NavigationLink("Notifications", destination: NotificationSettingsView())
                     NavigationLink("Apple Health", destination: AppleHealthSettings())
-                    NavigationLink("Siri Shortcuts", destination: Text("Siri Shortcuts"))
-                    NavigationLink("Advanced", destination: Text("Advanced Settings"))
+                    NavigationLink("Siri Shortcuts", destination: ShortcutSettings())
+                    // No longer need advanced settings
                 }
                 
-                // Apearance Section
-                Section(header: Text("Appearance")) {
-                    NavigationLink("Theme", destination: Text("Theme Settings"))
-                    NavigationLink("App Icons", destination: Text("App Icons Settings"))
-                }
+                // Took out Appearance section due to using adaptive UI
                 
                 // Log WorkOut! Section
                 Section(header: Text("Log WorkOut!")) {
