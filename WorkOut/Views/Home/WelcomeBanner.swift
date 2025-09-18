@@ -22,10 +22,7 @@ struct WelcomeBanner: View {
             
         }
         .padding()
-        .background(
-            RoundedRectangle(cornerRadius: 16)
-                .fill(Color(.systemGray6))
-        )
+        .background(.thinMaterial, in: RoundedRectangle(cornerRadius: 16))
         .padding(.horizontal)
     }
 }

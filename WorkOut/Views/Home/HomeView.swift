@@ -12,30 +12,35 @@ struct HomeView: View  {
         NavigationStack {
             ScrollView{
                 VStack(alignment: .center, spacing: 24){
-                    
+
                     // Placeholders
                     WelcomeBanner()
                         .frame(maxWidth: .infinity, alignment: .center)
-                    
+
                     WorkoutStatsChartView()
                         .frame(maxWidth: .infinity)
                         .frame(height: 150)
-                        .background(Color.gray.opacity(0.1))
-                        .cornerRadius(12)
-                    
+                        .background(.regularMaterial, in: RoundedRectangle(cornerRadius: 12))
+
                     Text("Workout Cards go here")
                         .frame(maxWidth: .infinity)
                         .frame(height: 200)
-                        .background(Color.gray.opacity(0.1))
-                        .cornerRadius(12)
+                        .background(.regularMaterial, in: RoundedRectangle(cornerRadius: 12))
                 }
-                .padding()
+                .scenePadding()
             }
+            .navigationTitle("Dashboard")
+            .navigationSubtitle("Your fitness journey")
             .toolbar{
                 ToolbarItem(placement: .principal){
-                    Text("Dashboard")
-                        .font(.title)
-                        .fontWeight(.bold)
+                    VStack {
+                        Text("Dashboard")
+                            .font(.title)
+                            .fontWeight(.bold)
+                        Text("Your fitness journey")
+                            .font(.caption)
+                            .foregroundStyle(.secondary)
+                    }
                 }
             }
         }

@@ -39,8 +39,26 @@ struct WorkoutStatsChartView: View {
                     y: .value("Calories", $0.caloriesBurned)
                 )
                 .foregroundStyle(.blue)
+                .interpolationMethod(.cardinal)
+
+                AreaMark(
+                    x: .value("Date", $0.date, unit: .day),
+                    y: .value("Calories", $0.caloriesBurned)
+                )
+                .foregroundStyle(
+                    .linearGradient(
+                        colors: [.blue.opacity(0.3), .clear],
+                        startPoint: .top,
+                        endPoint: .bottom
+                    )
+                )
+                .interpolationMethod(.cardinal)
             }
             .frame(height: 200)
+            .chartBackground { chartProxy in
+                Color.clear
+                    .background(.thinMaterial)
+            }
         }
         .padding()
     }
