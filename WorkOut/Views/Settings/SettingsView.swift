@@ -21,7 +21,7 @@ struct SettingsView: View {
 
                 // Log WorkOut! Section
                 Section("Log WorkOut!") {
-                    NavigationLink("Rest Timer", destination: Text("Rest Timer Settings"))
+                    NavigationLink("Rest Timer", destination: RestTimerSettings())
                     NavigationLink("Warm-Up Calculator", destination: Text("Warm-Up Calculator Settings"))
                     NavigationLink("Previous Set", destination: Text("Previous Set Settings"))
                 }
