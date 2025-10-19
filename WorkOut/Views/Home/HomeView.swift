@@ -29,8 +29,6 @@ struct HomeView: View  {
                 }
                 .scenePadding()
             }
-            .navigationTitle("Dashboard")
-            .navigationSubtitle("Your fitness journey")
             .toolbar{
                 ToolbarItem(placement: .principal){
                     VStack {
