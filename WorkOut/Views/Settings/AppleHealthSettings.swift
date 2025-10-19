@@ -18,27 +18,27 @@ struct AppleHealthSettings: View {
     
     //Start of view
     var body: some View {
-        Form {
-            
+        List {
+
             // General Disclaimer
             Section {
                 Text("Apple Health integration requires permissions to be granted in Settings -> Data Access & Devices -> WorkOut")
                     .font(.footnote)
                     .foregroundColor(.secondary)
             }
-            
+
             // Toggle/Allow button for WorkOut to Write data over Apple Health
             Section(header: Text("ALLOW WORKOUT TO WRITE HEALTH DATA")) {
                 Toggle("Workouts", isOn: $writeWorkouts)
                 Text("Sync workouts originating from WorkOut to Apple Health.")
                     .font(.caption)
                     .foregroundColor(.secondary)
-                
+
                 Toggle("Measurements", isOn: $writeMeasurements)
                 Text("Sync measurements originating from WorkOut to Apple Health.")
                     .font(.caption)
                     .foregroundColor(.secondary)
-                
+
                 // showWriteWarning
                 if showWriteWaring {
                     BannerView(
@@ -48,14 +48,14 @@ struct AppleHealthSettings: View {
                     )
                 }
             }
-            
+
             // Allow data to be Read section
             Section(header: Text("ALLOW WORKOUT TO READ")) {
                 Toggle("Measurements", isOn: $readMeasurements)
                 Text("Measurements will be read from Apple Health and displayed in WorkOut. Measurements are stored locally and not uploaded to WorkOut servers.")
                     .font(.caption)
                     .foregroundColor(.secondary)
-                
+
                 if showReadWarning {
                     BannerView(text: "2 additional measurements available in Apple Health. Add measurements to WorkOut?", buttonTitle: "Add", action: { print("Add tapped")})
                 }

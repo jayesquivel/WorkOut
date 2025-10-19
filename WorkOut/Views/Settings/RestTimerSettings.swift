@@ -106,7 +106,7 @@ struct RestTimerSettings: View {
                                 .foregroundColor(.primary)
                                 .padding(.horizontal, 12)
                                 .padding(.vertical, 6)
-                                .background(.systemGray5)
+                                .background(Color(.systemGray5))
                                 .clipShape(RoundedRectangle(cornerRadius: 8))
                         }
                     }
@@ -129,7 +129,7 @@ struct RestTimerSettings: View {
                     }
                     
                     NavigationLink(destination: TimerValuePicker(
-                        Title: "Drop Set",
+                        title: "Drop Set",
                         selectedValue: $dropSetTimer
                     )) {
                         HStack {
@@ -166,12 +166,8 @@ struct RestTimerSettings: View {
             }
             .navigationTitle("Rest Timer")
             .navigationBarTitleDisplayMode(.inline)
-            .toolBar{
-                
-                ToolbartItem(placement: .navigationBarLeading) {
-                    Button("Back"){
-                        dismiss()
-                    }
+            .toolbar{
+
                 }
             }
             
@@ -181,15 +177,141 @@ struct RestTimerSettings: View {
     private func formatTime(seconds: Int) -> String {
         if seconds == 0 {
             return "None"
-    }
+        }
         let minutes = seconds / 60
-        let remaingSeconds = seconds % 60
+        let remainingSeconds = seconds % 60
         return String(format: "%d:%02d", minutes, remainingSeconds)
-}
+    }
     private func updateRestTimersForAllTemplates() {
         // Implement logic to update all workout templates
         print("Updating rest timers for all templates...")
     }
+    
+    // Supporting Views
+    
+    struct SoundEffectPicker: View {
+        @Binding var selectedSound: String
+        @Environment(\.dismiss) private var dismiss
+        
+        let soundOptions = [
+            "Boxing Bell",
+            "Chime",
+            "Bell",
+            "Ding",
+            "Whistle",
+            "Beep"
+        ]
+        
+        var body: some View {
+            List {
+                ForEach(soundOptions, id: \.self) { sound in
+                    Button(action: {
+                        selectedSound = sound
+                        dismiss()
+                    }) {
+                        HStack {
+                            Text(sound)
+                            Spacer()
+                            if selectedSound == sound {
+                                Image(systemName: "checkmark")
+                                    .foregroundColor(.blue)
+                            }
+                        }
+                    }
+                    .foregroundColor(.primary)
+                }
+            }
+            .navigationTitle("Sound Effect")
+            .navigationBarTitleDisplayMode(.inline)
+        }
+    }
+
+    struct RestTimerModePicker: View {
+        @Binding var selectedMode: String
+        @Environment(\.dismiss) private var dismiss
+        
+        let modeOptions = [
+            "Inline",
+            "Modal",
+            "Fullscreen"
+        ]
+        var body: some View {
+            List {
+                ForEach(modeOptions, id: \.self) { mode in
+                    Button(action: {
+                        selectedMode = mode
+                        dismiss()
+                    }) {
+                        HStack {
+                            Text(mode)
+                            Spacer()
+                            if selectedMode == mode {
+                                Image(systemName: "checkmark")
+                                    .foregroundColor(.blue)
+                            }
+                        }
+                    }
+                    .foregroundColor(.primary)
+                }
+            }
+            .navigationTitle("Rest Timer Mode")
+            .navigationBarTitleDisplayMode(.inline)
+        }
+    }
+
+struct TimerValuePicker: View {
+    let title: String
+    @Binding var selectedValue: Int
+    @Environment(\.dismiss) private var dismiss
+    
+    var body: some View {
+        List{
+            Section {
+                Button(action: {
+                    selectedValue = 0
+                    dismiss()
+                }) {
+                    HStack {
+                        Text("None")
+                        Spacer()
+                        if selectedValue == 0 {
+                            Image(systemName: "Checkmark")
+                                .foregroundColor(.blue)
+                        }
+                    }
+                }
+                .foregroundColor(.primary)
+            }
+            
+            Section {
+                ForEach ([30, 24, 60, 90, 120, 150, 180, 240, 300], id: \.self) { seconds in
+                    Button(action: {
+                        selectedValue = seconds
+                        dismiss()
+                    }) {
+                        HStack {
+                            Text(formatTime(seconds:seconds))
+                            Spacer()
+                            if selectedValue == seconds {
+                                Image(systemName: "checkmark")
+                                    .foregroundColor(.blue)
+                            }
+                        }
+                    }
+                    .foregroundColor(.primary)
+                }
+            }
+        }
+        .navigationTitle(title)
+        .navigationBarTitleDisplayMode(.inline)
+}
+
+private func formatTime(seconds: Int) -> String {
+    let minutes = seconds / 60
+    let remainingSeconds = seconds % 60
+    return String(format: "%d:%02d", minutes, remainingSeconds)
+}
+}
 
 #Preview {
     RestTimerSettings()
