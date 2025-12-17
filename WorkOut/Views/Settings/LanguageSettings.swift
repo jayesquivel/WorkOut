@@ -57,77 +57,84 @@ struct LanguageSettings: View {
     var body: some View {
         List {
             Section {
-                ForEach (languageManager.avaliableLanguages) {language in
+                ForEach(languageManager.avaliableLanguages) { language in
                     LanguageRow(
                         language: language,
-                        isSelected: languageManager.currentLanguage == language.code, animation: animation)
+                        isSelected: languageManager.currentLanguage == language.code,
+                        animation: animation
+                    )
                     .contentShape(Rectangle())
-                    .onTapGesture(withAnimation(.spring(response: 0.3, dampingFraction: 0.7)){
-                        languageManager.setLanguage(language.code)
+                    .onTapGesture {
+                        withAnimation(.spring(response: 0.3, dampingFraction: 0.7)) {
+                            languageManager.setLanguage(language.code)
+                        }
+                        // Haptic feedback implementation
+                        let generator = UIImpactFeedbackGenerator(style: .light)
+                        generator.impactOccurred()
                     }
-                                  // Haptic feedback implemention
-                                  let generator = UIImpactFeedbackGenerator(style: .light) generator.impactOccurred()
                 }
-            }
-        } header: {
-            Text("App Language")
-        } footer: {
-            Text("Choose your preferred language for your app! This setting only affects the app interface and doesn't affact your device system settings.")
-                .font(.caption)
-                .foregroundStyle(.secondary)
-        }
-        
-        // Additional sectiong showing current selection
-        Section {
-            HStack {
-                Text("Current language")
+            } header: {
+                Text("App Language")
+            } footer: {
+                Text("Choose your preferred language for your app! This setting only affects the app interface and doesn't affect your device system settings.")
+                    .font(.caption)
                     .foregroundStyle(.secondary)
-                Spacer()
-                if let current = languageManager.getCurrentLanguage() {
-                    Text("\(current.flag) \(current.nativeName)")
-                        .fontWeight(.medium)
+            }
+
+            // Additional section showing current selection
+            Section {
+                HStack {
+                    Text("Current language")
+                        .foregroundStyle(.secondary)
+                    Spacer()
+                    if let current = languageManager.getCurrentLanguage() {
+                        Text("\(current.flag) \(current.nativeName)")
+                            .fontWeight(.medium)
+                    }
                 }
             }
         }
-    }
         .navigationTitle("Language")
         .navigationBarTitleDisplayMode(.large)
     }
+}
 
 
-// Language row componet
-struct LanguageRow: View{
+// Language row component
+struct LanguageRow: View {
     let language: Language
     let isSelected: Bool
     let animation: Namespace.ID
-    
+
     var body: some View {
         HStack(spacing: 16) {
             // Flag emoji
             Text(language.flag)
                 .font(.system(size: 32))
-            
+
             // Language names
             VStack(alignment: .leading, spacing: 4) {
                 Text(language.nativeName)
                     .font(.body)
-                    .fontWeight(isSelected ? .semibold: .regular)
-                
+                    .fontWeight(isSelected ? .semibold : .regular)
+
                 Text(language.name)
                     .font(.caption)
                     .foregroundStyle(.secondary)
             }
-            
+
             Spacer()
-            
+
             // Checkmark with animation
             if isSelected {
-                
+                Image(systemName: "checkmark")
+                    .foregroundStyle(.blue)
+                    .matchedGeometryEffect(id: "checkmark", in: animation)
             }
         }
     }
-    
-    #Preview {
-        LanguageSettings()
-    }
+}
+
+#Preview {
+    LanguageSettings()
 }

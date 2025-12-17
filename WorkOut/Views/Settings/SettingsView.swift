@@ -28,7 +28,8 @@ struct SettingsView: View {
 
                 // Units and Localization Section
                 Section("Units and Localization") {
-                    NavigationLink("Language", destination: Text("Language Settings"))
+                    NavigationLink("Language", destination:
+                        LanguageSettings())
                     NavigationLink("Measurement Weight Unit", destination: Text("Weight Unit Settings"))
                     NavigationLink("Distance Unit", destination: Text("Distance Unit Settings"))
                     NavigationLink("Size Unit", destination: Text("Size Unit Settings"))
