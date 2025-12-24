@@ -11,7 +11,7 @@ import SwiftUI
 struct WelcomeBanner: View {
     
     private var greeting: String{
-        let hour = Calendar.current.component(.hour, from: <#T##Date#>())
+        let hour = Calendar.current.component(.hour, from: Date())
         switch hour {
         case 5..<12:
             return "Good morning"

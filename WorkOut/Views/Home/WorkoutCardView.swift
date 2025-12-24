@@ -3,12 +3,13 @@
 //  WorkOut
 //
 //  Created by Joseph Esquivel on 5/15/25.
+//  Reusable workout card following Apple Health design patterns
 //
 
 import Foundation
 import SwiftUI
 
-// Mark: - Workout type Enum
+// MARK: - Workout Type Enum
 enum WorkoutType: String, CaseIterable {
     case running = "Running"
     case walking = "Walking"
@@ -46,15 +47,16 @@ enum WorkoutType: String, CaseIterable {
     }
 }
 
-// Workout Data Model
+// MARK: - Workout Data Model
 struct Workout: Identifiable {
     let id = UUID()
     let type: WorkoutType
-    let duration: TimeInterval // in seconds
+    let duration: TimeInterval
     let calories: Int
     let date: Date
+    let distance: Double?
     
-    var formattedDuration: String  {
+    var formattedDuration: String {
         let minutes = Int(duration) / 60
         let hours = minutes / 60
         let remainingMinutes = minutes % 60
@@ -72,29 +74,29 @@ struct Workout: Identifiable {
         return String(format: "%.2f km", km)
     }
     
-    var formatteTime: String {
+    var formattedTime: String {
         let formatter = DateFormatter()
         formatter.timeStyle = .short
         return formatter.string(from: date)
     }
 }
 
-// Workout Card View
+// MARK: - Workout Card View
 struct WorkoutCardView: View {
     let workout: Workout
     
     var body: some View {
-        VStack(alignment: .leading, spacing: 12){
+        VStack(alignment: .leading, spacing: 12) {
             // Header
-            Hstack {
+            HStack {
                 Label(workout.type.rawValue, systemImage: workout.type.icon)
                     .font(.subheadline)
                     .fontWeight(.semibold)
                     .foregroundStyle(workout.type.color)
                 
-            Spacer()
+                Spacer()
                 
-                HStack(spacing: 4){
+                HStack(spacing: 4) {
                     Text(workout.formattedTime)
                         .font(.subheadline)
                         .foregroundStyle(.secondary)
@@ -108,15 +110,15 @@ struct WorkoutCardView: View {
             // Main stats
             HStack {
                 // Duration
-                HStack(alignment: .firstTextBaseline, spacing: 2){
+                HStack(alignment: .firstTextBaseline, spacing: 2) {
                     Text(workout.formattedDuration)
                         .font(.system(size: 28, weight: .regular, design: .rounded))
                 }
                 
                 Spacer()
                 
-                // Secondary Stats
-                VStack(alignment: .trailing, spacing: 4){
+                // Secondary stats
+                VStack(alignment: .trailing, spacing: 4) {
                     HStack(spacing: 4) {
                         Image(systemName: "flame.fill")
                             .foregroundStyle(.orange)
@@ -142,34 +144,54 @@ struct WorkoutCardView: View {
     }
 }
 
-// Recent Workout list
-struct RecentWorkoutView: View {
+// MARK: - Recent Workouts List
+struct RecentWorkoutsView: View {
     let workouts: [Workout]
     
     var body: some View {
-        VStack(alignment: .leading, spacing: 12){
-            ForEach(workouts) { workout in WorkoutCardView(workout: workout)
+        VStack(alignment: .leading, spacing: 12) {
+            ForEach(workouts) { workout in
+                WorkoutCardView(workout: workout)
             }
         }
     }
 }
 
-// Placeholder data
+// MARK: - Sample Data
 extension Workout {
     static let sampleWorkouts: [Workout] = [
-        Workout(type: .running, duration: 1800, calories: 320, date: Date(), distance: 4200),
-        Workout(type: .strength, duration: 2700, calories: 280, date: Date().addingTimeInterval(-86400), distance: nil),
-        Workout(type: .cycling, duration: 3600, calories: 400, date: Date().addingTimeInterval(-172800), distance: 12000)
+        Workout(
+            type: .running,
+            duration: 1800,
+            calories: 320,
+            date: Date(),
+            distance: 4200
+        ),
+        Workout(
+            type: .strength,
+            duration: 2700,
+            calories: 280,
+            date: Date().addingTimeInterval(-86400),
+            distance: nil
+        ),
+        Workout(
+            type: .cycling,
+            duration: 3600,
+            calories: 400,
+            date: Date().addingTimeInterval(-172800),
+            distance: 12000
+        )
     ]
 }
 
 #Preview {
     ScrollView {
         VStack(spacing: 12) {
-            ForEach(Workout.sampleWorkouts) { workout in WorkoutCardView(workout: workout)}
+            ForEach(Workout.sampleWorkouts) { workout in
+                WorkoutCardView(workout: workout)
+            }
         }
+        .padding()
     }
-    .padding()
     .background(Color(.systemBackground))
 }
-
